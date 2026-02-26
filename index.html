@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="Reinforcement Learning, Equivariance, Geometric deep learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Partially Equivariant Reinforcement Learning</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.png"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://pranaboy72.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Related Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="">
+          </a>
+          <a class="navbar-item" href="">
+          </a>
+          <a class="navbar-item" href="">
+          </a>
+          <a class="navbar-item" href="">
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments  </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://pranaboy72.github.io/">Junwoo Chang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/MinwooPark00">Minwoo Park</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://sites.google.com/berkeley.edu/joohwan-seo-page/home">Joohwan Seo</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://me.berkeley.edu/people/roberto-horowitz/">Roberto Horowitz</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.jmlee.kr/">Jongmin Lee</a><sup>1,&dagger;</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://mlcs.yonsei.ac.kr/Professor.html">Jongeun Choi</a><sup>1,&dagger;</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <div class="author-block"><sup>1</sup>Yonsei University        </div>
+            <div class="author-block"><sup>2</sup>UC Berkeley        </div>
+            <div class="author-block"><sup>&dagger;</sup>Equal Advising</div>
+            
+            <!-- <span class="author-block"><sup>$\star$</sup>equally advising</span> -->
+            </div>
+            <div>International Conference on Learning Representations (ICLR) 2026<div>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://openreview.net/forum?id=dRDcVyobhH"
+                   class="external-link button is-normal is-rounded is-dark custom-button-text">
+                  <span class="icon">
+                      <i class="fa-regular fa-file-lines"></i>
+                  </span>
+                  <span>OpenReview</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2512.00915"
+                   class="external-link button is-normal is-rounded is-dark custom-button-text">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://youtu.be/xIFSx_NVROU?si=MaxsHmih6AnQKAVy"
+                   class="external-link button is-normal is-rounded is-dark custom-button-text">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://github.com/perl.github.io"
+                   class="external-link button is-normal is-rounded is-dark custom-button-text">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Group symmetries provide a powerful inductive bias for reinforcement learning (RL), enabling efficient generalization across symmetric states and actions via group-invariant Markov Decision Processes (MDPs). However, real-world environments rarely realize fully group-invariant MDPs; dynamics, actuation limits, and reward design usually break symmetries, often only locally. Under group-invariant Bellman backups for such cases, local symmetry-breaking introduces errors that propagate across the entire state-action space, resulting in global value estimation errors. To address this, we introduce <strong>Partially Group-Invariant MDP (PI-MDP)</strong>, which selectively applies group-invariant or standard Bellman backups depending on where symmetry holds. This framework mitigates error propagation from locally broken symmetries while maintaining the benefits of equivariance, thereby enhancing sample efficiency and generalizability. Building on this framework, we present practical RL algorithms - Partially Equivariant (PE)-DQN for discrete control and PE-SAC for continuous control - that combine the benefits of equivariance with robustness to symmetry-breaking. Experiments across grid world, locomotion, and manipulation benchmarks show that PE-DQN and PE-SAC significantly outperform baselines, highlighting the importance of selective symmetry exploitation for robust and sample-efficient RL.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <!-- <h2 class="title is-3">Problem: Local symmetry-breaking induces global value errors</h2> -->
+        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Problem: Local symmetry-breaking induces global value errors</h4>
+        <div class="content has-text-justified">
+          <p align="center">
+            <img src="./static/images/problem.png" style="max-width: 80%;"></img>
+          </p>
+          <ul>
+            <li><strong>Equivariant RL premise.</strong> If an MDP is group-invariant (rewards and transitions invariant under $g$), then the optimal value satisfies $V^*(g \cdot s) = V^*(s)$, and there exists an optimal policy that is equivariant. </li>
+            <li><strong>Symmetry-breaking in practice.</strong> In real-world settings, the environment is not group-invariant due to diverse factors (e.g., obstacles, joint limits, reward shaping). </li>
+            <li><strong>Practical impact.</strong> Under such mismatch, enforcing strict equivariance can produce errors, even beyond the local breaking region.</li>
+          </ul>
+          <br>
+          <h4 class="title is-4 has-text-left" style="text-align: left;">Mismatch in reward/transition amplifies over horizon</h4>
+          <p align="center">
+            <img src="./static/images/Bellman.png" style="max-width: 60%;"></img>
+          </p>
+          <ul>
+            <li><strong>Local mismatch enters the backup.</strong> When the MDP violates group symmetry, the symmetry-aware Bellman backup differs from the standard Bellman operator due to reward/transition mismatch.</li>
+            <li><strong>Why errors spread.</strong> Because Bellman backups propagate information through multi-step transitions, local mismatch can accumulate over the planning horizon, producing global value estimation error. The bound formalizes this amplification via $\frac{1}{1-\gamma}$.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Solution: Partially Group-Invariant MDP (PI-MDP)</h4>
+        <div class="content has-text-justified">
+          <p align="center">
+            <img src="./static/images/pimdp.png" style="max-width: 70%;"></img>
+          </p>
+          <ul>
+            <li><strong>PI-MDP.</strong> We introduce PI-MDP, which uses a state-action gate $\lambda(s,a)$ to apply equivariant backups where symmetry is valid and switch to the <strong>standard</strong> model where symmetry-breaking occurs.</li>
+            <li><strong>Partially Equivariant RL.</strong> Building on PI-MDP, we derive two practical deep RL algorithms: <strong>PE-DQN</strong> and <strong>PE-SAC</strong>, which preserve equivariant inductive bias where symmetry is valid while falling back to the <strong>standard</strong> backup in symmetry-breaking regions.</li>
+            <li><strong>Learning the gate.</strong> We train $\lambda(s,a)$ <strong>as an auxiliary task</strong> from the disagreement between two reward/transition predictors: one based on the group-invariant model $\mathcal{M}_E$ and the other based on the <strong>unconstrained</strong> model $\mathcal{M}_N$. Larger disagreement indicates local symmetry-breaking and encourages switching to $\mathcal{M}_N$.</li>
+          </ul>
+          <br>
+          <h4 class="title is-4 has-text-left" style="text-align: left;">PI-MDP recovers the true optimum under correct gating</h4>
+          <p align="center">
+            <img src="./static/images/piBellman.png" style="max-width: 60%;"></img>
+          </p>
+          <ul>
+            <li><strong>PI-MDP alleviates equivariance error through selective gating.</strong> If $\lambda(s,a)=1$ on all symmetry-breaking state-action pairs, PI-MDP theoretically mitigates the error bound to zero.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Continuous control results</h4>
+        <div class="content has-text-justified">
+          <p align="center">
+            <img src="./static/images/exp_continuous.png" style="max-width: 70%;"></img>
+          </p>
+          <ul>
+            <li>We evaluate <strong>PE-SAC</strong> on continuous-control tasks. PE-SAC achieves strong sample efficiency across tasks and remains robust under symmetry-breaking.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+
+        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Learned gate visualization</h4>
+
+        <div class="content has-text-justified">
+          <p>
+            The videos below demonstrate how the learned gate responds to local symmetry-breaking. 
+            The background color and the moving circle indicate the predicted gate probability <strong>$\Pr(\lambda=1 \mid s,a)$</strong>. 
+            <strong style="color: green;">Green ($\lambda \approx 0$)</strong> indicates the equivariant approximation is reliable, while 
+            <strong style="color: red;">Red ($\lambda \approx 1$)</strong> indicates local symmetry-breaking, triggering a switch to the standard model.
+          </p>
+        </div>
+
+        <h4 class="title is-4 has-text-left" style="text-align: left;">UR5e Reach</h4>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Task:</strong> The robot arm aligns its end-effector with a target SE(3) pose, exhibiting an approximate SO(3) symmetry around the workspace center.<br>
+            <strong>What to look for:</strong> Notice how the gate increases (turns red) near configurations where joint limits and kinematic singularities locally violate this assumed symmetry.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-centered">
+            <div class="video-container">
+              <video class="center" controls playsinline autoplay loop muted preload="metadata"
+                     src="./static/videos/ur1.mp4"
+                     style="border-radius:10px; width: 90%; max-width: 600px;"></video>
+            </div>
+          </div>
+          <div class="column is-centered">
+            <div class="video-container">
+              <video class="center" controls playsinline autoplay loop muted preload="metadata"
+                     src="./static/videos/ur2.mp4"
+                     style="border-radius:10px; width: 90%; max-width: 600px;"></video>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="title is-4 has-text-left" style="text-align: left; margin-top: 1.5rem;">MuJoCo Ant</h4>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Task:</strong> Moving forward safely. The leg configuration exhibits an approximate 90° rotational symmetry.<br>
+            <strong>What to look for:</strong> The gate increases (turns red) when contact-driven dynamics, friction, or joint limits make the equivariant approximation unreliable.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-centered">
+            <div class="video-container">
+              <video class="center" controls playsinline autoplay loop muted preload="metadata"
+                     src="./static/videos/ant1.mp4"
+                     style="border-radius:10px; width: 90%; max-width: 600px;"></video>
+            </div>
+          </div>
+          <div class="column is-centered">
+            <div class="video-container">
+              <video class="center" controls playsinline autoplay loop muted preload="metadata"
+                     src="./static/videos/ant2.mp4"
+                     style="border-radius:10px; width: 90%; max-width: 600px;"></video>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h3 class="title">Citation</h3>
+    <pre><code>
+    @inproceedings{
+      chang2026partially,
+      title={Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments},
+      author={Junwoo Chang and Minwoo Park and Joohwan Seo and Roberto Horowitz and Jongmin Lee and Jongeun Choi},
+      booktitle={International Conference on Learning Representations},
+      year={2026},
+      url={https://openreview.net/forum?id=dRDcVyobhH}
+    }
+    </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website design borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
