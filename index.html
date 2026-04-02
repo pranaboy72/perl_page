@@ -52,43 +52,6 @@
 </head>
 <body>
 
-<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://pranaboy72.github.io/">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Related Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="">
-          </a>
-          <a class="navbar-item" href="">
-          </a>
-          <a class="navbar-item" href="">
-          </a>
-          <a class="navbar-item" href="">
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav> -->
-
-
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
@@ -149,7 +112,7 @@
               </span>
               <!-- Video Link. -->
               <!-- <span class="link-block">
-                <a href="https://youtu.be/xIFSx_NVROU?si=MaxsHmih6AnQKAVy"
+                <a href="https://youtu.be/"
                    class="external-link button is-normal is-rounded is-dark custom-button-text">
                   <span class="icon">
                       <i class="fab fa-youtube"></i>
@@ -175,6 +138,42 @@
   </div>
 </section>
 
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+
+        <p class="is-size-5 has-text-left" style="margin-top: 0; margin-bottom: 2rem;">
+          <strong>TL;DR:</strong> By selectively applying equivariance, PE-RL maintains sample efficiency while remaining robust to symmetry-breaking!
+        </p>
+
+        <div class="columns is-centered">
+          <div class="column is-centered">
+            <h5 class="title is-5">UR5e Reach</h5>
+            <div class="video-container">
+              <video class="center" controls playsinline autoplay loop muted preload="metadata"
+                     src="./static/videos/ur1.mp4"
+                     style="border-radius:10px; width: 80%; max-width: 600px;"></video>
+            </div>
+          </div>
+          
+          <div class="column is-centered">
+            <h5 class="title is-5">MuJoCo Ant</h5>
+            <div class="video-container">
+              <video class="center" controls playsinline autoplay loop muted preload="metadata"
+                     src="./static/videos/ant1.mp4"
+                     style="border-radius:10px; width: 70%; max-width: 600px;"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -197,25 +196,15 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column">
-        <!-- <h2 class="title is-3">Problem: Local symmetry-breaking induces global value errors</h2> -->
         <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Problem: Local symmetry-breaking induces global value errors</h4>
         <div class="content has-text-justified">
-          <p align="center">
-            <img src="./static/images/problem.png" style="max-width: 80%;"></img>
-          </p>
+          <figure class="image is-inline-block">
+            <img src="./static/images/problem.png" style="max-width: 100%;" alt="Equivariance error propagation">
+          </figure>
           <ul>
-            <li><strong>Equivariant RL premise.</strong> If an MDP is group-invariant (rewards and transitions invariant under $g$), then the optimal value satisfies $V^*(g \cdot s) = V^*(s)$, and there exists an optimal policy that is equivariant. </li>
-            <li><strong>Symmetry-breaking in practice.</strong> In real-world settings, the environment is not group-invariant due to diverse factors (e.g., obstacles, joint limits, reward shaping). </li>
-            <li><strong>Practical impact.</strong> Under such mismatch, enforcing strict equivariance can produce errors, even beyond the local breaking region.</li>
-          </ul>
-          <br>
-          <h4 class="title is-4 has-text-left" style="text-align: left;">Mismatch in reward/transition amplifies over horizon</h4>
-          <p align="center">
-            <img src="./static/images/Bellman.png" style="max-width: 80%;"></img>
-          </p>
-          <ul>
-            <li><strong>Local mismatch enters the backup.</strong> When the MDP violates group symmetry, the symmetry-aware Bellman backup differs from the standard Bellman operator due to reward/transition mismatch.</li>
-            <li><strong>Why errors spread.</strong> Because Bellman backups propagate information through multi-step transitions, local mismatch can accumulate over the planning horizon, producing global value estimation error. The bound formalizes this amplification via $\frac{1}{1-\gamma}$.</li>
+            <li><strong>Strict Equivariance Assumption:</strong> Standard equivariant RL assumes a globally symmetric Markov Decision Process (MDP). Thus, rotating the state and action spaces should theoretically yield invariant optimal values (see a and b).</li>
+            <li><strong>Symmetry-Breaking in Reality:</strong> Real-world environments violate this assumption due to static obstacles or kinematic limits. Comparing rotated values with a stabilized goal (c) reveals local equivariance errors exactly at the obstacle.</li>
+            <li><strong>Global Error Propagation:</strong> Bellman backups amplify this local one-step mismatch, $\delta(s,a)$, by the horizon $\frac{1}{1-\gamma}$. This causes the error to propagate outward, corrupting the global value estimation.</li>
           </ul>
         </div>
       </div>
@@ -229,23 +218,42 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column">
-        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Solution: Partially Group-Invariant MDP (PI-MDP)</h4>
+        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Theory: Partially Group-Invariant MDP (PI-MDP)</h4>
         <div class="content has-text-justified">
-          <p align="center">
-            <img src="./static/images/pimdp.png" style="max-width: 70%;"></img>
-          </p>
+          <figure class="image is-inline-block">
+            <img src="./static/images/pimdp.png" style="max-width: 70%;" alt="PI-MDP">
+          </figure>
           <ul>
-            <li><strong>PI-MDP.</strong> We introduce PI-MDP, which uses a state-action gate $\lambda(s,a)$ to apply equivariant backups where symmetry is valid and switch to the <strong>standard</strong> model where symmetry-breaking occurs.</li>
-            <li><strong>Partially Equivariant RL.</strong> Building on PI-MDP, we derive two practical deep RL algorithms: <strong>PE-DQN</strong> and <strong>PE-SAC</strong>, which preserve equivariant inductive bias where symmetry is valid while falling back to the <strong>standard</strong> backup in symmetry-breaking regions.</li>
-            <li><strong>Learning the gate.</strong> We train $\lambda(s,a)$ <strong>as an auxiliary task</strong> from the disagreement between two reward/transition predictors: one based on the group-invariant model $\mathcal{M}_E$ and the other based on the <strong>unconstrained</strong> model $\mathcal{M}_N$. Larger disagreement indicates local symmetry-breaking and encourages switching to $\mathcal{M}_N$.</li>
+            <li><strong>PI-MDP:</strong> We propose PI-MDP, introducing a gating function $\lambda(s,a)$ to interpolate between the group-invariant MDP and the true environment. This selectively applies equivariance only where symmetry holds.</li>
           </ul>
           <br>
           <h4 class="title is-4 has-text-left" style="text-align: left;">PI-MDP recovers the true optimum under correct gating</h4>
-          <p align="center">
-            <img src="./static/images/piBellman.png" style="max-width: 80%;"></img>
-          </p>
+          <figure class="image is-inline-block">
+            <img src="./static/images/piBellman.png" style="max-width: 80%;" alt="PI Bellman">
+          </figure>
           <ul>
-            <li><strong>PI-MDP alleviates equivariance error through selective gating.</strong> If $\lambda(s,a)=1$ on all symmetry-breaking state-action pairs, PI-MDP theoretically mitigates the error bound to zero.</li>
+            <li><strong>Mitigating the Error:</strong> By correctly routing symmetry-broken state-action pairs to the true MDP, PI-MDP suppresses the local mismatch. This theoretically forces the global equivariance error bound to zero.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Algorithm: Partially Equivariant RL (PE-RL)</h4>
+        <div class="content has-text-justified">
+          <figure class="image is-inline-block">
+            <img src="./static/images/perl.png" style="max-width: 100%;" alt="PE-RL Algorithm Architecture">
+          </figure>
+          <ul>
+            <li><strong>Partially Equivariant RL:</strong> Based on PI-MDP, we develop practical algorithms (PE-DQN and PE-SAC). They retain sample efficiency from equivariance while adaptively reverting to standard Bellman updates in asymmetric regions.</li>
+            <li><strong>Learning the Gate:</strong> We optimize $\lambda(s,a)$ via an auxiliary disagreement objective. Large prediction errors between an equivariant dynamics predictor ($\hat{P}_E$) and a standard predictor ($\hat{P}_N$) indicate symmetry violations, dynamically triggering a switch to the standard network.</li>
           </ul>
         </div>
       </div>
@@ -261,11 +269,12 @@
       <div class="column">
         <h4 class="title is-3 has-text-left" style="text-align: left; margin-top: 0;">Continuous control results</h4>
         <div class="content has-text-justified">
-          <p align="center">
-            <img src="./static/images/exp_continuous.png" style="max-width: 80%;"></img>
-          </p>
+          <figure class="image is-inline-block">
+            <img src="./static/images/exp_continuous.png" style="max-width: 80%;">
+          </figure>
           <ul>
-            <li>We evaluate <strong>PE-SAC</strong> on continuous-control tasks. PE-SAC achieves strong sample efficiency across tasks and remains robust under symmetry-breaking.</li>
+            <li><strong>High Sample Efficiency:</strong> In symmetric tasks like Swimmer, PE-SAC matches the sample efficiency of strict equivariance.</li>
+            <li><strong>Robustness to Symmetry-Breaking:</strong> In heavily symmetry-broken tasks with free orientation (like UR5e Reach), strict equivariance collapses. PE-SAC dynamically routes around these breaks to achieve robust, stable learning.</li>
           </ul>
         </div>
       </div>
